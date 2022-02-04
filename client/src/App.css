@@ -1,0 +1,12 @@
+.MuiDialog-paper{
+  height: 100% !important;
+  width: 60% !important;
+  border-radius: 0px;
+  box-shadow: none !important;
+  max-height: 100% !important;
+  max-width: 100% !important;
+}
+.MuiDialog-scrollPaper{
+  margin-top: 5% !important;
+  
+}
