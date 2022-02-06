@@ -1,6 +1,11 @@
 import { Dialog, Box, Typography, List, ListItem } from "@mui/material";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { makeStyles } from "@mui/styles";
+import { GoogleLogin } from "react-google-login";
+
+import { toast } from "react-toastify";
+import { AccountContext } from "../../context/Authprovider";
+import { clientId } from '../../constant/config';
 
 const useStyle = makeStyles({
   component: {
@@ -39,6 +44,17 @@ function Login() {
   const classes = useStyle();
   const url = "https://www.ginifab.com/feeds/qr_code/img/qrcode.jpg";
 
+  const { setAccount } = useContext(AccountContext);
+
+  const onLoginSuccess = async (res) => {
+    toast.success("Login Success");
+    setAccount(res.profileObj);
+  };
+
+  const onLoginFailure = (res) => {
+    toast.error("logiing failed");
+  };
+
   return (
     <Fragment>
       <Box>
@@ -59,8 +75,18 @@ function Login() {
                 </ListItem>
               </List>
             </Box>
-            <Box>
+            <Box style={{ position: "relative" }}>
               <img src={url} alt="QR" className={classes.qr} />
+              <Box style={{ position: "absolute", right: "29%", top: "22%" }}>
+                <GoogleLogin
+                  buttonText=""
+                  clientId={clientId}
+                  isSignedIn={true}
+                  onSuccess={onLoginSuccess}
+                  onFailure={onLoginFailure}
+                  cookiePolicy={"single_host_origin"}
+                />
+              </Box>
             </Box>
           </Box>
         </Dialog>
