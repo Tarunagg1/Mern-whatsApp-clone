@@ -3,7 +3,8 @@ import { Box } from "@mui/system";
 import React, { Fragment } from "react";
 import { makeStyles } from "@mui/styles";
 import "./css/chatbox.css";
-import Menu from './Menu/Menu';
+import Menu from "./Menu/Menu";
+import Chat from "./chat/Chat";
 
 const useStyle = makeStyles({
   component: {
@@ -13,22 +14,24 @@ const useStyle = makeStyles({
     minWidth: 380,
   },
   rightCompponent: {
-    border:'1px solid rgba(0,0,0,0.14)'
+    border: "1px solid rgba(0,0,0,0.14)",
+    width: "100%",
   },
 });
 export default function Chatbox() {
   const classes = useStyle();
   // BackdropProps={{ style: { backgroundColor: "unset" } }}
-
+  // backdropProps={{style: {backgroundColor:"unset"}}}
+  
   return (
     <Fragment>
-      <Dialog backdropProps={{style: {backgroundColor:"unset"}}} open={true}>
+      <Dialog open={true}>
         <Box className={classes.component}>
           <Box className={classes.leftCompponent}>
             <Menu />
           </Box>
           <Box className={classes.rightCompponent}>
-            <h1>h11</h1>
+            <Chat />
           </Box>
         </Box>
       </Dialog>

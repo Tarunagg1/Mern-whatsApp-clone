@@ -5,7 +5,8 @@ import { GoogleLogin } from "react-google-login";
 
 import { toast } from "react-toastify";
 import { AccountContext } from "../../context/Authprovider";
-import { clientId } from '../../constant/config';
+import { clientId } from "../../constant/config";
+import { adduser } from "../../services/api";
 
 const useStyle = makeStyles({
   component: {
@@ -49,6 +50,7 @@ function Login() {
   const onLoginSuccess = async (res) => {
     toast.success("Login Success");
     setAccount(res.profileObj);
+    await adduser(res.profileObj);
   };
 
   const onLoginFailure = (res) => {

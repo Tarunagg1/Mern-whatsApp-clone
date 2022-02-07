@@ -38,7 +38,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Search() {
+export default function Search({settext}) {
   const classes = useStyles();
   return (
     <Fragment>
@@ -55,6 +55,7 @@ export default function Search() {
             }}
             style={{ paddingLeft: "30px" }}
             inputProps={{ "aria-label": "search" }}
+            onChange={(e) => settext(e.target.value)}
           />
         </Box>
       </Box>
