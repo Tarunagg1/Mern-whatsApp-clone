@@ -1,5 +1,6 @@
 import conversationModel from '../models/conversation.js';
 
+
 export const newConversation = async (req,res) => {
     const {senderId,reciverId} = req.body;
 
@@ -21,3 +22,30 @@ export const newConversation = async (req,res) => {
         return res.status(400).json({ message: error.message });
       }
 }
+
+
+export const getConversation = async (req, res) => {
+  const {senderId,receiverId} = req.body;
+  if(!senderId || !receiverId){
+    return res.status(400).json({ message: "SenderId or receiverId required" });
+}
+  try {
+
+    const isExists = await conversationModel.findOne({members:{$all:[senderId,receiverId]}});        
+
+    if(isExists){
+        return res.status(200).json({ message: "conversation exists",isExists });
+    }else{
+      return res.status(400).json({ message: "Conversation not found" }); 
+    }
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+}
+
+
+
+
+
+
+

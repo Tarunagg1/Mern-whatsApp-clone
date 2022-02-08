@@ -1,10 +1,12 @@
 import { Dialog } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { makeStyles } from "@mui/styles";
 import "./css/chatbox.css";
 import Menu from "./Menu/Menu";
 import Chat from "./chat/Chat";
+import { userContext } from '../context/userProvider';
+import Nochat from '../components/chat/Nochat';
 
 const useStyle = makeStyles({
   component: {
@@ -19,10 +21,8 @@ const useStyle = makeStyles({
   },
 });
 export default function Chatbox() {
-  const classes = useStyle();
-  // BackdropProps={{ style: { backgroundColor: "unset" } }}
-  // backdropProps={{style: {backgroundColor:"unset"}}}
-  
+  const classes = useStyle(); 
+  const {person} = useContext(userContext);
   return (
     <Fragment>
       <Dialog open={true}>
@@ -31,7 +31,9 @@ export default function Chatbox() {
             <Menu />
           </Box>
           <Box className={classes.rightCompponent}>
-            <Chat />
+            { 
+                Object.keys(person).length ? <Chat />  : <Nochat />
+            }
           </Box>
         </Box>
       </Dialog>

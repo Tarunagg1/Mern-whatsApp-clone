@@ -11,7 +11,6 @@ export const adduser = async (req, res) => {
       return res.status(201).json({ message: "user created" });
     }
   } catch (error) {
-    console.log(error);
     return res.status(400).json({ message: error.message });
   }
 };
@@ -22,7 +21,6 @@ export const getUsers = async (req, res) => {
     const userData = await user.find({});
     return res.status(201).json({ message: "user lists", userData });
   } catch (error) {
-    console.log(error);
     return res.status(400).json({ message: error.message });
   }
 };
