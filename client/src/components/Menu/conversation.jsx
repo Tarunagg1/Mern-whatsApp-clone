@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import { AccountContext } from "../../context/Authprovider";
 import { userContext } from "../../context/userProvider";
-import { setConversation } from "../../services/api";
+import { getConversation, setConversation } from "../../services/api";
 
 // import { setConversation, getConversation } from '../../../service/api';
 
@@ -45,7 +45,7 @@ const Conversation = ({ user }) => {
     "https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png";
 
   const { setPerson } = useContext(userContext);
-  const { Account } = useContext(AccountContext);
+  const { Account, socket, setactiveUsers } = useContext(AccountContext);
 
   const [message, setMessage] = useState({});
 
@@ -57,6 +57,24 @@ const Conversation = ({ user }) => {
   const getTime = (time) => {
     return time < 10 ? "0" + time : time;
   };
+
+  useEffect(() => {
+    socket.current.emit("adduser", Account.googleId);
+    socket.current.on("getUsers", (user) => {
+      setactiveUsers(user);
+    });
+  }, [Account]);
+
+  useEffect(() => {
+    const getConversationDetails = async () => {
+      let { data } = await getConversation({
+        senderId: Account.googleId,
+        receiverId: user.googleId,
+      });
+      setMessage({text:data.isExists.message,timestamp:data.isExists.updatedAt});
+    };
+    getConversationDetails();
+  }, []);
 
   return (
     <Box className={classes.component} onClick={setUser}>

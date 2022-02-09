@@ -2,7 +2,7 @@ import { Search, MoreVert } from "@material-ui/icons";
 import { Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { AccountContext } from "../../context/Authprovider";
 
 const useStyles = makeStyles({
@@ -42,8 +42,7 @@ const ChatHeader = ({ person }) => {
   const classes = useStyles();
   const url = person.imageUrl || "https://static.straitstimes.com.sg/s3fs-public/articles/2020/12/01/af_moneyheist_011220.jpg";
 
-  // const { activeUsers } = useContext(AccountContext);
-
+  const { activeUsers } = useContext(AccountContext);
   // console.log(activeUsers);
 
   return (
@@ -53,8 +52,9 @@ const ChatHeader = ({ person }) => {
         <Box style={{width:'20%'}}>
           <Typography className={classes.name}>{person.name}</Typography>
           <Typography className={classes.status}>
-            Offline
-            {/* {activeUsers?.find(user => user.userId === person.googleId) ? 'Online' : 'Offline'} */}
+            {
+              activeUsers?.find(user => user.userId === person.googleId) ? "Online" : "Offline"
+            }
           </Typography>
         </Box>
         <Box className={classes.rightContainer}>

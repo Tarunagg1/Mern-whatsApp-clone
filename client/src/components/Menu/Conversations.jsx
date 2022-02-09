@@ -16,7 +16,8 @@ export default function Conversations({text}) {
   const [users, setusers] = useState();
   const classes = useStyles();
 
-  const { Account } = useContext(AccountContext);
+  const { Account,incommingFlag } = useContext(AccountContext);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +29,8 @@ export default function Conversations({text}) {
       setusers(filterData);
     };
     fetchData();
-  }, [text]);
+    
+  }, [incommingFlag]);
 
 
 
